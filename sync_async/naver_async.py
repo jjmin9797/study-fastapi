@@ -10,7 +10,9 @@ async def fetcher(session, url):
 async def main():
     urls = ["https://naver.com", "https://google.com", "https://instagram.com"]
 
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(
+        connector=aiohttp.TCPConnector(ssl=False)
+    ) as session:
         # responses = [await fetcher(session, url) for url in urls]
         responses = await asyncio.gather(*[fetcher(session, url) for url in urls])
         return responses
